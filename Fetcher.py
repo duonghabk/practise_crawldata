@@ -51,7 +51,8 @@ class Fetcher():
 
             # Extract text from each cell
             row_data = [cell.text for cell in cells]
-            if 'USDT' in row_data[0]:
+            row_data[0] = row_data[0].replace("\nPerpetual", "")
+            if 'USDT' in row_data[0]:               
                 row_datas.append(row_data)
         return row_datas
 
@@ -71,8 +72,12 @@ class Fetcher():
         return driver
 
     def readFromFile(self):
-        pass
+        try:
+            dataframe = pd.read_csv(market_future_file)
+        except:
+            dataframe = pd.DataFrame({"Name":["USDT"],"number":[0] })
+        return dataframe
 
     def saveToFile(self, dataframe: pd.DataFrame):
-        dataframe.to_csv(market_future_file, index=False)
+        dataframe.to_csv(market_future_file, index=True)
 

@@ -12,4 +12,5 @@ dependencies:
     - selenium
     - lxml
     - html5lib
+    - schedule
 

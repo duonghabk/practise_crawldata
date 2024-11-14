@@ -1,0 +1,16 @@
+[Unit]
+Description=Report Market Service
+
+[Service]
+User=your_user
+Group=your_group
+WorkingDirectory=/path/to/your/app
+ExecStart=/usr/bin/python your_script.py
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+
+
+// sudo systemctl enable reportMarketBot.service
+// sudo systemctl start reportMarketBot.service
