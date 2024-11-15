@@ -1,11 +1,9 @@
 
-
-
-
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.service import Service
 import time
 import pandas as pd
 import os
@@ -38,6 +36,7 @@ class Fetcher():
         row_datas = []
         for i in range(1,4):
             self._clickButton("page-" + str(i))
+            print("Switch to page ", str(i))
             row_datas.extend(self._readTable())
         df_result = pd.DataFrame(row_datas, columns=header_titles)
 
@@ -61,16 +60,19 @@ class Fetcher():
 
 
     def setupDriver(self):
+        service = Service(executable_path='/usr/lib/chromium-browser/chromedriver')    
         # Set options to make browsing easier
         options = webdriver.ChromeOptions()
-        options.add_argument('--headless')
+        # options.add_argument('--headless')
         options.add_argument("disable-infobars")
         options.add_argument("start-maximized")
         options.add_argument("disable-dev-shm-usage")
         options.add_argument("no-sandbox")
         options.add_experimental_option("excludeSwitches", ["enable-automation"])
         options.add_argument("disable-blink-features=AutomationControlled")
-        driver = webdriver.Chrome(options=options)
+        
+        driver = webdriver.Chrome(service=service, options=options)
+        #driver = webdriver.Chrome( options=options)
 
 
         return driver
@@ -82,6 +84,6 @@ class Fetcher():
             dataframe = pd.DataFrame({"Name":["USDT"],"number":[0] })
         return dataframe
 
-    def saveToFile(self, dataframe: pd.DataFrame):
+    def saveToFile(self, dataframe):
         dataframe.to_csv(market_future_file, index=True)
 
