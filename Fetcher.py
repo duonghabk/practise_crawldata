@@ -19,15 +19,16 @@ class Fetcher():
 
 
     def _clickButton(self, id):
-        self.driver.find_element(by="id", value=id).click()
+        button = self.driver.find_element(by="id", value=id)
+        self.driver.execute_script("arguments[0].click();", button)
 
     def request(self):
         self.driver =  self.setupDriver()
         self.driver.get(binance_future_url)
         time.sleep(2)
         volume24h = self.driver.find_element(by="xpath", value="//*[text()='24h Volume(USD)']")
-        volume24h.click()
-        volume24h.click()
+        self.driver.execute_script("arguments[0].click();", volume24h)
+        self.driver.execute_script("arguments[0].click();", volume24h)
 
         header = self.driver.find_element(By.CLASS_NAME, value="bn-table-thead")
         headers = header.find_elements(By.TAG_NAME, 'th')
@@ -63,7 +64,7 @@ class Fetcher():
         service = Service(executable_path='/usr/lib/chromium-browser/chromedriver')    
         # Set options to make browsing easier
         options = webdriver.ChromeOptions()
-        # options.add_argument('--headless')
+        options.add_argument('--headless')
         options.add_argument("disable-infobars")
         options.add_argument("start-maximized")
         options.add_argument("disable-dev-shm-usage")
@@ -71,8 +72,8 @@ class Fetcher():
         options.add_experimental_option("excludeSwitches", ["enable-automation"])
         options.add_argument("disable-blink-features=AutomationControlled")
         
-        driver = webdriver.Chrome(service=service, options=options)
-        #driver = webdriver.Chrome( options=options)
+        # driver = webdriver.Chrome(service=service, options=options)
+        driver = webdriver.Chrome( options=options)
 
 
         return driver
