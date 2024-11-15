@@ -4,7 +4,7 @@ import pandas as pd
 
 
 class ReportBot():
-    def __init__(self) -> None:
+    def __init__(self):
         self.fetcher = Fetcher()
         self.telegramSender = TelegramSender()
 

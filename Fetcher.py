@@ -13,7 +13,7 @@ from config import *
 binance_future_url = "https://www.binance.com/en/futures/markets/overview-um"
 market_future_file = os.getcwd() + "/market_future.csv"
 class Fetcher():
-    def __init__(self) -> None:
+    def __init__(self):
         pass
 
 
@@ -24,7 +24,7 @@ class Fetcher():
         self.driver =  self.setupDriver()
         self.driver.get(binance_future_url)
         time.sleep(2)
-        volume24h = self.driver.find_element(by="xpath", value="/html/body/div[1]/div[2]/div[3]/div/div[1]/div[2]/div/div[2]/div[1]/div/div/div/div/table/thead/tr/th[6]/div")
+        volume24h = self.driver.find_element(by="xpath", value="//*[text()='24h Volume(USD)']")
         volume24h.click()
         volume24h.click()
 
@@ -60,6 +60,7 @@ class Fetcher():
     def setupDriver(self):
         # Set options to make browsing easier
         options = webdriver.ChromeOptions()
+        options.add_argument('--headless')
         options.add_argument("disable-infobars")
         options.add_argument("start-maximized")
         options.add_argument("disable-dev-shm-usage")

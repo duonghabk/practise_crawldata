@@ -3,7 +3,7 @@ from config import *
 from datetime import datetime
 
 class TelegramSender():
-    def __init__(self) -> None:
+    def __init__(self):
        pass
 
     def sendMessage(self, document):
