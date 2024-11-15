@@ -2,10 +2,9 @@
 Description=Report Market Service
 
 [Service]
-User=your_user
-Group=your_group
-WorkingDirectory=/path/to/your/app
-ExecStart=/usr/bin/python your_script.py
+User= reportMarketBot
+WorkingDirectory=~/code/practise_crawldata
+ExecStart=/bin/bash -c 'cd ~/code/practise_crawldata/ && python3 main.py'
 Restart=on-failure
 
 [Install]
