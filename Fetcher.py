@@ -61,7 +61,7 @@ class Fetcher():
 
 
     def setupDriver(self):
-        service = Service(executable_path='/usr/lib/chromium-browser/chromedriver')    
+        service = Service(executable_path='/usr/bin/chromedriver')    
         # Set options to make browsing easier
         options = webdriver.ChromeOptions()
         options.add_argument('--headless')
@@ -72,8 +72,8 @@ class Fetcher():
         options.add_experimental_option("excludeSwitches", ["enable-automation"])
         options.add_argument("disable-blink-features=AutomationControlled")
         
-        # driver = webdriver.Chrome(service=service, options=options)
-        driver = webdriver.Chrome( options=options)
+        driver = webdriver.Chrome(service=service, options=options)
+        # driver = webdriver.Chrome( options=options)
 
 
         return driver

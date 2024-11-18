@@ -1,11 +1,13 @@
 [Unit]
 Description=Report Market Service
+After=network.target
 
 [Service]
-User= reportMarketBot
-WorkingDirectory=~/code/practise_crawldata
-ExecStart=/bin/bash -c 'cd ~/code/practise_crawldata/ && python3 main.py'
+Type=idle
 Restart=on-failure
+User=root
+ExecStart=/bin/bash -c 'source customBot/bin/activate && python /home/pi/code/practise_crawldata/main.py'
+
 
 [Install]
 WantedBy=multi-user.target
@@ -13,3 +15,20 @@ WantedBy=multi-user.target
 
 // sudo systemctl enable reportMarketBot.service
 // sudo systemctl start reportMarketBot.service
+
+
+[Unit]
+Description=Report Market Service
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=/bin/bash -c 'source customBot/bin/activate && python /home/pi/code/practise_crawldata/main.py'
+Restart=on-failure
+User=root
+StandardOutput=file:/tmp/reportMarketBot.log
+StandardError=inherit
+RestartSec = 5
+TimeoutStartSec = infinity
+[Install]
+WantedBy=multi-user.target
